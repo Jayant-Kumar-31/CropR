@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Crop Recommendation System</h1>
+
+        <div class="sensor-data">
+            <div class="data-block">🌡️ Temperature: <span id="temperature">--</span> °C</div>
+            <div class="data-block">💧 Humidity: <span id="humidity">--</span> %</div>
+            <div class="data-block">🌱 Soil Moisture: <span id="ph">--</span> </div>
+            <div class="data-block">⚖️ PH Level: <span id="soil_moisture">--</span> </div>
+        </div>
+
+        <button id="fetch-data">🚀 Fetch Data and Recommend</button>
+
+        <div class="prediction">
+            Predicted Crop: 🌾 <span id="predicted_crop">--</span>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("fetch-data").addEventListener("click", function() {
+            fetch('/fetch-data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("temperature").innerText = data.temperature;
+                    document.getElementById("humidity").innerText = data.humidity;
+                    document.getElementById("ph").innerText = data.ph;
+                    document.getElementById("soil_moisture").innerText = data.soil_moisture;
+                    document.getElementById("predicted_crop").innerText = data.predicted_crop;
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        });
+    </script>
+
+</body>
+</html>
